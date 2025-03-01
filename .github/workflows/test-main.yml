@@ -21,17 +21,14 @@ jobs:
       with:
         dotnet-version: '8.0'
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1  
-
     - name: Restore dependencies
-      run: nuget restore duAnPro/duAnPro.sln 
+      run: dotnet restore duAnPro/duAnPro.sln
 
     - name: Build project
-      run: msbuild "duAnPro/duAnPro/DuAnMoiMoiMoi.csproj" /p:Configuration=Release /p:Platform="AnyCPU" /p:OutputPath=bin\Release\
+      run: dotnet build duAnPro/duAnPro.sln --configuration Release
 
     - name: Run unit tests
-      run: dotnet test "duAnPro/Test/TestProject/TestProject.csproj" --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test duAnPro/Test/TestProject/TestProject.csproj --no-build --logger "trx;LogFileName=test_results.trx"
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
