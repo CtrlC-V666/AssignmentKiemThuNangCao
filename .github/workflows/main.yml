@@ -1,4 +1,4 @@
-name: .NET Tests & CI/CD
+name: .NET Tests & CI/CD 
 
 on:
   push:
