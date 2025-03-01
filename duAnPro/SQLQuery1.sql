@@ -1,0 +1,3 @@
+﻿DELETE FROM ChiTietHoaDon
+
+DELETE FROM HoaDon
