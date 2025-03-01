@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace duAnPro
+namespace duAnPro.Test
 {
-    internal class Test
+    internal class frmDoiMatKhauTest
     {
     }
 }
