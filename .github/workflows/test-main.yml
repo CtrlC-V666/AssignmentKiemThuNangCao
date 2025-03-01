@@ -1,0 +1,40 @@
+name: .NET Tests & CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest  
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0'
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1  
+
+    - name: Restore dependencies
+      run: nuget restore duAnPro/duAnPro.sln 
+
+    - name: Build project
+      run: msbuild "duAnPro/duAnPro/DuAnMoiMoiMoi.csproj" /p:Configuration=Release /p:Platform="AnyCPU" /p:OutputPath=bin\Release\
+
+    - name: Run unit tests
+      run: dotnet test "duAnPro/Test/TestProject/TestProject.csproj" --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test Results
+        path: duAnPro/TestResults/test_results.trx
